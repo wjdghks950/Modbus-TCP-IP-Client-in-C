@@ -146,7 +146,8 @@ int main(int argc, char* argv[])
                 case 4:
                     printf("Writing multiple holding registers...\n");
                     i = 0, numBytes = 0;
-                    numBytes = numCoils*2; // 'numCoils' registers * 2 bytes (each)
+                    int numRecv = numCoils - startAddr;
+                    numBytes = numRecv*2; // 'numCoils' registers * 2 bytes (each)
                     len = sizeof(char) * (12 + 1 + numBytes);
                     request = (char*)malloc(len);
                     slave_addr = 0x01;
@@ -158,7 +159,7 @@ int main(int argc, char* argv[])
 
                     values = (int*)malloc(sizeof(int)*numBytes);
                     memset(values, 0, sizeof(int)*numBytes);
-                    for (i=0; i<numCoils; i++){
+                    for (i=0; i<numRecv; i++){
                         printf("[ Enter %dth value to write to register ] : ", i+1);
                         scanf("%d", &values[i]);
                         memcpy(&request[12+((i+1)*2)], &values[i], sizeof(unsigned char));
