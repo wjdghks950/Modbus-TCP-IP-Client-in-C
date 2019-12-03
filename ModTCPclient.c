@@ -83,7 +83,7 @@ int main(int argc, char* argv[])
                     slave_addr = 0x01;
                     func_code = 0x01;
                     request[1] = 0x00;
-                    request[5] = 0x06;
+                    request[5] = 0x06; // Length from here to the end of the frame(Unit ID~end of Data)
                     memcpy(&request[6], &slave_addr, sizeof(unsigned char));
                     memcpy(&request[7], &func_code, sizeof(unsigned char));
                     memcpy(&request[9], &startAddr, sizeof(unsigned char));
